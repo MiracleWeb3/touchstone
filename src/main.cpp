@@ -1,4 +1,4 @@
-// pantheon — a verification gate for Claude Code, and nothing else.
+// touchstone — a verification gate for Claude Code, and nothing else.
 //
 // Wired to the Stop hook. It reads the transcript of the turn that is trying to finish and
 // refuses the stop when the evidence contradicts "done": a check that failed, a stub that
@@ -9,7 +9,7 @@
 //
 //   (no args)          hook mode: event JSON on stdin, decision JSON on stdout
 //   --scan <path>      print the turn digest for a transcript (the bench and diff harness)
-//   --selftest         run the assertions (built only with -DPANTHEON_SELFTEST)
+//   --selftest         run the assertions (built only with -DTOUCHSTONE_SELFTEST)
 #include <algorithm>
 #include <cstdio>
 #include <filesystem>
@@ -50,22 +50,22 @@ std::string esc(std::string_view s) {
     return o;
 }
 
-pan::json::Ptr json_parse_or_null(const std::string& raw) {
+stone::json::Ptr json_parse_or_null(const std::string& raw) {
     if (raw.find_first_not_of(" \t\r\n") == std::string::npos) return nullptr;
-    pan::json::Ptr doc = pan::json::parse(raw);
-    if (!doc || doc->kind != pan::json::Value::Kind::Object) return nullptr;
+    stone::json::Ptr doc = stone::json::parse(raw);
+    if (!doc || doc->kind != stone::json::Value::Kind::Object) return nullptr;
     return doc;
 }
 
-std::string str_at(const pan::json::Value* doc, const char* key) {
+std::string str_at(const stone::json::Value* doc, const char* key) {
     if (!doc) return "";
-    const pan::json::Value* v = doc->get(key);
-    return (v && v->kind == pan::json::Value::Kind::String) ? v->str : std::string();
+    const stone::json::Value* v = doc->get(key);
+    return (v && v->kind == stone::json::Value::Kind::String) ? v->str : std::string();
 }
 
 // The digest, as JSON. Field names match the Python dict so the two can be diffed directly.
 int print_scan(const std::string& path) {
-    const pan::Turn t = pan::scan_turn(path);
+    const stone::Turn t = stone::scan_turn(path);
     std::string out = "{\"last_user\":\"" + esc(t.last_user) + "\",\"edits\":[";
     for (std::size_t i = 0; i < t.edits.size(); ++i) {
         const auto& e = t.edits[i];
@@ -85,7 +85,7 @@ int print_scan(const std::string& path) {
         out += "\"" + esc(t.skills[i]) + "\"";
     }
     out += "],\"out_tokens\":" + std::to_string(t.out_tokens) + ",\"problems\":[";
-    const auto problems = pan::gate_check(t);
+    const auto problems = stone::gate_check(t);
     for (std::size_t i = 0; i < problems.size(); ++i) {
         if (i) out += ",";
         out += "\"" + esc(problems[i]) + "\"";
@@ -115,7 +115,7 @@ int bench_mode(const std::string& dir) {
     for (const auto& path : fixtures) {
         const std::string name = path.stem().string();
         const bool expect_trap = !name.empty() && name[0] == 't';
-        const auto problems = pan::gate_check(pan::scan_turn(path.string()));
+        const auto problems = stone::gate_check(stone::scan_turn(path.string()));
         const bool caught = !problems.empty();
         const bool passed = expect_trap ? caught : !caught;
 
@@ -141,23 +141,23 @@ int hook_mode() {
     std::ostringstream buf;
     buf << std::cin.rdbuf();
     const std::string raw = buf.str();
-    const pan::json::Ptr payload = json_parse_or_null(raw);
+    const stone::json::Ptr payload = json_parse_or_null(raw);
     if (!payload) return 0;
 
     const std::string cwd = str_at(payload.get(), "cwd");
     const std::string session = str_at(payload.get(), "session_id");
     const std::string transcript = str_at(payload.get(), "transcript_path");
     const std::string prompt_id = str_at(payload.get(), "prompt_id");
-    const pan::json::Value* sa = payload->get("stop_hook_active");
+    const stone::json::Value* sa = payload->get("stop_hook_active");
     const bool stop_active = sa && sa->truthy();
 
-    const pan::Turn turn = pan::scan_turn(transcript);
-    const pan::Verdict v =
-        pan::run_gate(turn, pan::load_mode(cwd), session, prompt_id, stop_active);
+    const stone::Turn turn = stone::scan_turn(transcript);
+    const stone::Verdict v =
+        stone::run_gate(turn, stone::load_mode(cwd), session, prompt_id, stop_active);
 
-    if (v.kind == pan::Verdict::Kind::Block) {
+    if (v.kind == stone::Verdict::Kind::Block) {
         std::cout << R"({"decision":"block","reason":")" << esc(v.text) << "\"}\n";
-    } else if (v.kind == pan::Verdict::Kind::Notice) {
+    } else if (v.kind == stone::Verdict::Kind::Notice) {
         std::cout << R"({"systemMessage":")" << esc(v.text) << "\"}\n";
     }
     return 0;
@@ -165,18 +165,18 @@ int hook_mode() {
 
 }  // namespace
 
-#ifdef PANTHEON_SELFTEST
+#ifdef TOUCHSTONE_SELFTEST
 #include "selftest.inc"
 #endif
 
 int main(int argc, char** argv) {
     const std::string_view arg = argc > 1 ? std::string_view(argv[1]) : std::string_view();
-#ifdef PANTHEON_SELFTEST
+#ifdef TOUCHSTONE_SELFTEST
     if (arg == "--selftest") return selftest();
 #endif
     if (arg == "--scan") {
         if (argc < 3) {
-            std::fprintf(stderr, "usage: pantheon --scan <transcript.jsonl>\n");
+            std::fprintf(stderr, "usage: touchstone --scan <transcript.jsonl>\n");
             return 2;
         }
         return print_scan(argv[2]);

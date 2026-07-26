@@ -1,9 +1,9 @@
-# pantheon builds one binary, and it builds it into the cache dir — never here.
-pantheon
+# touchstone builds one binary, and it builds it into the cache dir — never here.
+touchstone
 gate
 *.o
 .DS_Store
 
 # transient / local state (never part of the plugin)
-.pantheon/
+.touchstone/
 .omc/

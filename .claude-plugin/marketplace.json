@@ -1,13 +1,13 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "pantheon",
+  "name": "touchstone",
   "description": "A verification gate for coding agents — it refuses \"done\" when the evidence says otherwise.",
   "owner": {
     "name": "CyberPunk"
   },
   "plugins": [
     {
-      "name": "pantheon",
+      "name": "touchstone",
       "description": "One C++ binary on the Stop hook. It reads the transcript of the turn trying to finish and blocks when a check failed, a stub was introduced, or a substantial code change shipped with no verification. Budgeted blocks, fail-open everywhere, benchmarked in CI at 11/11 caught and 0 false positives. No dependencies.",
       "source": "./",
       "category": "productivity"

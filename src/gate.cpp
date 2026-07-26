@@ -5,7 +5,7 @@
 #include "patterns.hpp"
 #include "state.hpp"
 
-namespace pan {
+namespace stone {
 namespace {
 
 constexpr int kMaxBlocksPerTurn = 2;
@@ -87,7 +87,7 @@ Verdict run_gate(const Turn& turn, Mode mode, const std::string& session,
     const std::string summary = join(problems, "; ", problems.size());
 
     if (mode == Mode::Warn) {
-        return {Verdict::Kind::Notice, "⚠ pantheon gate (warn-only): " + summary};
+        return {Verdict::Kind::Notice, "⚠ touchstone gate (warn-only): " + summary};
     }
 
     // Hard evidence (failing checks, stubs) earns two blocks; the softer "no verification
@@ -107,16 +107,16 @@ Verdict run_gate(const Turn& turn, Mode mode, const std::string& session,
     if (stop_active) used = std::max(used, 1);
 
     if (used >= limit) {
-        return {Verdict::Kind::Notice, "⚠ pantheon gate yielded after " + std::to_string(used) +
+        return {Verdict::Kind::Notice, "⚠ touchstone gate yielded after " + std::to_string(used) +
                                            " block(s) — still open: " + summary};
     }
     if (!record_block(session, turn_key, used)) {
         return {Verdict::Kind::Notice,
-                "⚠ pantheon gate (fail-open, counter unwritable): " + summary};
+                "⚠ touchstone gate (fail-open, counter unwritable): " + summary};
     }
 
     std::string reason =
-        "pantheon verification gate — do not finish yet: " + summary +
+        "touchstone verification gate — do not finish yet: " + summary +
         ". Before stopping again: make the failing tests pass, remove the introduced stubs "
         "(TODO/FIXME/.skip/.only/NotImplementedError), or run a real verification "
         "(tests / build / lint / selftest) on the code you changed and report the result. "
@@ -125,4 +125,4 @@ Verdict run_gate(const Turn& turn, Mode mode, const std::string& session,
     return {Verdict::Kind::Block, reason};
 }
 
-}  // namespace pan
+}  // namespace stone

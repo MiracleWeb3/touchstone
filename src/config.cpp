@@ -4,7 +4,7 @@
 
 #include "json.hpp"
 
-namespace pan {
+namespace stone {
 namespace {
 
 // Only the gate survived the rewrite, so only the gate's column of each preset survives.
@@ -41,12 +41,12 @@ Mode mode_from_name(const std::string& name) {
 
 Mode load_mode(const std::string& cwd) {
     Mode mode = Mode::Block;
-    if (!cwd.empty() && mode_from_file(cwd + "/.pantheon/config.json", mode)) return mode;
+    if (!cwd.empty() && mode_from_file(cwd + "/.touchstone/config.json", mode)) return mode;
     const char* home = std::getenv("HOME");
-    if (home && mode_from_file(std::string(home) + "/.claude/pantheon/config.json", mode)) {
+    if (home && mode_from_file(std::string(home) + "/.claude/touchstone/config.json", mode)) {
         return mode;
     }
     return mode;
 }
 
-}  // namespace pan
+}  // namespace stone

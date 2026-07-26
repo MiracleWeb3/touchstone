@@ -26,7 +26,7 @@ body:
     attributes:
       label: What the gate saw
       description: >
-        Run `pantheon --scan <transcript.jsonl>` on the transcript for that session and paste the
+        Run `touchstone --scan <transcript.jsonl>` on the transcript for that session and paste the
         output — it prints the edits, the commands, the verdicts and the problems it would raise,
         which is almost always enough to see why. Redact anything you'd rather not share.
       render: json

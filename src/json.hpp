@@ -10,7 +10,7 @@
 #include <string_view>
 #include <vector>
 
-namespace pan::json {
+namespace stone::json {
 
 struct Value;
 using Ptr = std::shared_ptr<Value>;
@@ -36,4 +36,4 @@ Ptr parse(std::string_view text);
 // Reads and parses a file. nullptr if unreadable.
 Ptr parse_file(const std::string& path);
 
-}  // namespace pan::json
+}  // namespace stone::json

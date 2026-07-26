@@ -10,7 +10,7 @@
 #include <string_view>
 #include <vector>
 
-namespace pan {
+namespace stone {
 
 // Splits a shell command on && || ; | so `pip install x && pytest -q` is judged per segment.
 // Everything from a heredoc marker on is dropped: the body is data, not commands.
@@ -33,4 +33,4 @@ bool is_code_file(std::string_view path);
 // "TODO/FIXME".
 std::vector<std::string> new_stub_kinds(std::string_view fresh, std::string_view old);
 
-}  // namespace pan
+}  // namespace stone

@@ -2,6 +2,17 @@
 
 All notable changes. Versions follow semver; the manifest (`.claude-plugin/plugin.json`) is the source of truth.
 
+## 4.1.0 — 2026-07-26
+
+Renamed: **pantheon → touchstone**.
+
+- **Why.** 4.0.0 deleted everything that was not the verification gate, and "pantheon" — a collection of many gods — became a name for a tool that does exactly one thing. A touchstone is the black stone you rub gold against: the streak it leaves tells you whether the metal is genuine, and says nothing about what it is worth. That is precisely this tool's claim and its documented ceiling — it checks that verification *happened*, not that your tests are any good.
+- **Breaking, in the way a package rename always is:** the plugin is now `touchstone@touchstone`, the binary caches to `~/.cache/touchstone/gate`, and state lives in `~/.claude/touchstone/gate/`. Project config moves from `.pantheon/config.json` to `.touchstone/config.json`, global from `~/.claude/pantheon/config.json` to `~/.claude/touchstone/config.json`. No migration path is provided and none is needed: 4.0.0 shipped hours earlier with zero installs. Versioned 4.1.0 rather than 5.0.0 for that reason — a major bump for a rename nobody had installed would be theatre.
+- **Internals renamed too**, so nothing carries the old name: C++ namespace `pan` → `stone`, selftest macro `PANTHEON_SELFTEST` → `TOUCHSTONE_SELFTEST`.
+- **New identity.** The Greek temple and meander borders were pantheon's iconography and meant nothing here; the mark is now a basanite slab with gold streaks rubbed across it. Wordmark resized to fit ten letters where eight used to sit.
+- **No behaviour change.** Same 82 selftest assertions, same replay benchmark at 11/11 traps caught and 0/10 false positives, same gate logic. The GitHub repository redirects from the old path.
+- Entries below deliberately keep the name **pantheon** — that is what the project was called when they happened.
+
 ## 4.0.0 — 2026-07-26
 
 Rewritten in C++. Everything that was not the verification gate is gone.

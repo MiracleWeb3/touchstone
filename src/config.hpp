@@ -5,15 +5,15 @@
 
 #include <string>
 
-namespace pan {
+namespace stone {
 
 enum class Mode { Block, Warn, Off };
 
-// Project config (<cwd>/.pantheon/config.json) wins over global
-// (~/.claude/pantheon/config.json). Missing or malformed files mean the default: block.
+// Project config (<cwd>/.touchstone/config.json) wins over global
+// (~/.claude/touchstone/config.json). Missing or malformed files mean the default: block.
 // Accepts {"gate": "block"|"warn"|"off"} and the legacy {"preset": "full"|"economy"|"quiet"}.
 Mode load_mode(const std::string& cwd);
 
 Mode mode_from_name(const std::string& name);
 
-}  // namespace pan
+}  // namespace stone

@@ -7,7 +7,7 @@
 #include "json.hpp"
 #include "patterns.hpp"
 
-namespace pan {
+namespace stone {
 namespace {
 
 struct BashRun {
@@ -181,4 +181,4 @@ Turn scan_turn(const std::string& transcript_path) {
     return turn;
 }
 
-}  // namespace pan
+}  // namespace stone

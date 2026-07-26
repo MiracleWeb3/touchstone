@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace pan {
+namespace stone {
 
 struct Edit {
     std::string file;
@@ -33,4 +33,4 @@ struct Turn {
 
 Turn scan_turn(const std::string& transcript_path);
 
-}  // namespace pan
+}  // namespace stone

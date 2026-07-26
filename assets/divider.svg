@@ -1,16 +1,17 @@
 <svg width="300" height="16" viewBox="0 0 300 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- greek meander section divider -->
+  <!-- section divider: a gold streak, as left on a touchstone -->
   <defs>
-    <pattern id="key" width="16" height="10" patternUnits="userSpaceOnUse">
-      <path d="M0 8 H12 V2 H2 V5 H8 V8 H16" stroke="#8b949e" stroke-width="1.4" fill="none" opacity="0.55"/>
-    </pattern>
-    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
-      <stop offset="0.15" stop-color="#fff" stop-opacity="1"/>
-      <stop offset="0.85" stop-color="#fff" stop-opacity="1"/>
-      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    <linearGradient id="streak" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b8863f" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#f0c766" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#b8863f" stop-opacity="0"/>
     </linearGradient>
-    <mask id="m"><rect x="0" y="0" width="300" height="16" fill="url(#fade)"/></mask>
+    <linearGradient id="streakFaint" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b8863f" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#f0c766" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#b8863f" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-  <rect x="0" y="3" width="300" height="10" fill="url(#key)" mask="url(#m)"/>
+  <rect x="0" y="7" width="300" height="1.6" rx="0.8" fill="url(#streak)"/>
+  <rect x="52" y="10.6" width="196" height="1" rx="0.5" fill="url(#streakFaint)"/>
 </svg>

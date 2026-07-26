@@ -8,7 +8,7 @@
 
 #include <string>
 
-namespace pan {
+namespace stone {
 
 // Identity of the turn a counter belongs to. Claude Code stamps every user prompt with a
 // unique prompt_id — use it. Hashing the prompt TEXT silently collided: type "continue"
@@ -27,4 +27,4 @@ bool record_block(const std::string& session, const std::string& turn_key, int u
 void set_gate_dir(std::string dir);
 std::string gate_dir();
 
-}  // namespace pan
+}  // namespace stone

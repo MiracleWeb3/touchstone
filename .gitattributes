@@ -1,4 +1,4 @@
 # Pre-built art and replay fixtures — keep them out of the Languages bar so it reflects
-# what pantheon itself is written in (C++).
+# what touchstone itself is written in (C++).
 assets/** linguist-vendored
 bench/fixtures/** linguist-generated

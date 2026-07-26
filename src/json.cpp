@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 
-namespace pan::json {
+namespace stone::json {
 namespace {
 
 struct Parser {
@@ -143,4 +143,4 @@ Ptr parse_file(const std::string& path) {
     return parse(text);
 }
 
-}  // namespace pan::json
+}  // namespace stone::json

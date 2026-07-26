@@ -7,7 +7,7 @@ body:
     attributes:
       label: The idea
       description: >
-        What should it do, and what problem does it kill? pantheon is deliberately one thing —
+        What should it do, and what problem does it kill? touchstone is deliberately one thing —
         a proposal that adds a second product is likely to be declined, but a proposal that makes
         the gate sharper is exactly what this is for.
     validations:

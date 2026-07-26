@@ -5,7 +5,7 @@
 #include <regex>
 #include <unordered_set>
 
-namespace pan {
+namespace stone {
 namespace {
 
 using std::regex;
@@ -192,4 +192,4 @@ std::vector<std::string> new_stub_kinds(std::string_view fresh, std::string_view
     return kinds;
 }
 
-}  // namespace pan
+}  // namespace stone

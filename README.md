@@ -1,12 +1,12 @@
 <div align="center">
 
-<img src="assets/hero.svg" alt="pantheon — verification for coding agents" width="760">
+<img src="assets/hero.svg" alt="touchstone — verification for coding agents" width="760">
 
 ### Your agent says it's done. This checks.
 
-A single C++ binary on the Stop hook. When your coding agent tries to end a turn, pantheon reads the transcript of what actually happened and **refuses the stop** if the evidence contradicts "done". For [Claude Code](https://claude.com/claude-code).
+A single C++ binary on the Stop hook. When your coding agent tries to end a turn, touchstone reads the transcript of what actually happened and **refuses the stop** if the evidence contradicts "done". For [Claude Code](https://claude.com/claude-code).
 
-![version](https://img.shields.io/badge/version-4.0.0-8957e5?style=flat-square) &nbsp;![license](https://img.shields.io/badge/license-MIT-3fb950?style=flat-square) &nbsp;![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-d97757?style=flat-square) &nbsp;![language](https://img.shields.io/badge/C%2B%2B-20-00599c?style=flat-square) &nbsp;![dependencies](https://img.shields.io/badge/dependencies-none-3fb950?style=flat-square) &nbsp;[![selftests](https://img.shields.io/github/actions/workflow/status/MiracleWeb3/pantheon/selftest.yml?style=flat-square&label=selftests)](https://github.com/MiracleWeb3/pantheon/actions/workflows/selftest.yml) &nbsp;![gate benchmark](https://img.shields.io/badge/gate_bench-11%2F11_caught_·_0_FP-3fb950?style=flat-square)
+![version](https://img.shields.io/badge/version-4.1.0-8957e5?style=flat-square) &nbsp;![license](https://img.shields.io/badge/license-MIT-3fb950?style=flat-square) &nbsp;![Claude Code](https://img.shields.io/badge/Claude_Code-plugin-d97757?style=flat-square) &nbsp;![language](https://img.shields.io/badge/C%2B%2B-20-00599c?style=flat-square) &nbsp;![dependencies](https://img.shields.io/badge/dependencies-none-3fb950?style=flat-square) &nbsp;[![selftests](https://img.shields.io/github/actions/workflow/status/MiracleWeb3/touchstone/selftest.yml?style=flat-square&label=selftests)](https://github.com/MiracleWeb3/touchstone/actions/workflows/selftest.yml) &nbsp;![gate benchmark](https://img.shields.io/badge/gate_bench-11%2F11_caught_·_0_FP-3fb950?style=flat-square)
 
 **[Why](#why-this-exists) · [What it blocks](#what-it-blocks) · [Proof](#proof) · [Install](#install) · [Config](#configuration) · [What it does not do](#what-it-deliberately-does-not-do)**
 
@@ -57,7 +57,7 @@ The counter is keyed on Claude Code's `prompt_id`, one file per session. It expi
 **The replay benchmark** — 21 fixtures through the real pipeline. 11 plant a fake-"done" the gate must catch; 10 are legitimate turns it must leave alone. It runs in CI on every push.
 
 ```console
-$ pantheon --bench bench/fixtures
+$ touchstone --bench bench/fixtures
 c5_jsx_placeholder_not_stub        clean  (no problems)                                PASS
 c6_full_rewrite_preexisting_todo   clean  (no problems)                                PASS
 t3_notimplemented_scaffold         trap   stubs introduced: payment.py: unimpleme...   PASS
@@ -66,7 +66,7 @@ t8_pure_deletion_unverified        trap   1 code file(s) changed (~45 lines) but
 gate caught 11/11 planted fake-dones, 0/10 false positives on clean turns
 ```
 
-**The port is faithful.** Version 4.0.0 rewrote pantheon from Python into C++. Before changing a single behaviour, both implementations were run over **1,146 real transcript turns** — every prefix landing on a different turn, 408 of them carrying actual edits or test runs, 74 raising a gate problem — and their decisions compared as parsed JSON:
+**The port is faithful.** Version 4.0.0 rewrote touchstone from Python into C++. Before changing a single behaviour, both implementations were run over **1,146 real transcript turns** — every prefix landing on a different turn, 408 of them carrying actual edits or test runs, 74 raising a gate problem — and their decisions compared as parsed JSON:
 
 ```
 1146/1146 identical · 0 mismatches · 0 errors
@@ -81,11 +81,11 @@ The one difference the harness found was real and worth the exercise: Python sli
 ## Install
 
 ```bash
-claude plugin marketplace add MiracleWeb3/pantheon
-claude plugin install pantheon@pantheon
+claude plugin marketplace add MiracleWeb3/touchstone
+claude plugin install touchstone@touchstone
 ```
 
-Restart Claude Code. On session start it compiles itself into `~/.cache/pantheon/gate` (once, ~1s) and rebuilds only when a source file is newer than the binary.
+Restart Claude Code. On session start it compiles itself into `~/.cache/touchstone/gate` (once, ~1s) and rebuilds only when a source file is newer than the binary.
 
 **Requires a C++20 compiler** — `g++` or `clang++`. If there isn't one, it says so once and stays inert for the session rather than failing every turn.
 
@@ -95,10 +95,10 @@ Restart Claude Code. On session start it compiles itself into `~/.cache/pantheon
 <br>
 
 ```bash
-c++ -std=c++20 -O2 -Wall -Wextra -Werror -DPANTHEON_SELFTEST -o pantheon src/*.cpp
-./pantheon --selftest                   # 82 assertions
-./pantheon --bench bench/fixtures       # the replay benchmark
-./pantheon --scan <transcript.jsonl>    # what the gate sees in one turn
+c++ -std=c++20 -O2 -Wall -Wextra -Werror -DTOUCHSTONE_SELFTEST -o touchstone src/*.cpp
+./touchstone --selftest                   # 82 assertions
+./touchstone --bench bench/fixtures       # the replay benchmark
+./touchstone --scan <transcript.jsonl>    # what the gate sees in one turn
 ```
 
 `--scan` is the honest way to argue with it: point it at a real transcript and it prints the edits, the checks, the verdicts and the problems it would raise.
@@ -110,7 +110,7 @@ c++ -std=c++20 -O2 -Wall -Wextra -Werror -DPANTHEON_SELFTEST -o pantheon src/*.c
 One knob, because one is all the gate ever read.
 
 ```jsonc
-// ~/.claude/pantheon/config.json  — or <project>/.pantheon/config.json, which wins
+// ~/.claude/touchstone/config.json  — or <project>/.touchstone/config.json, which wins
 { "gate": "block" }   // "block" (default) · "warn" (says it, allows it) · "off"
 ```
 
@@ -140,7 +140,7 @@ src/patterns.cpp    what counts as a check, a failure, a stub
 src/state.cpp       the block budget, atomically written
 src/config.cpp      one knob
 src/json.cpp        enough JSON to read a transcript
-src/selftest*.inc   82 assertions, -DPANTHEON_SELFTEST only
+src/selftest*.inc   82 assertions, -DTOUCHSTONE_SELFTEST only
 bench/fixtures/     21 replay fixtures — 11 traps, 10 clean
 ```
 

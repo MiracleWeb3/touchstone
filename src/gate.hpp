@@ -11,7 +11,7 @@
 #include "config.hpp"
 #include "scan.hpp"
 
-namespace pan {
+namespace stone {
 
 struct Verdict {
     enum class Kind { Allow, Notice, Block };
@@ -30,4 +30,4 @@ std::vector<std::string> gate_check(const Turn& turn);
 Verdict run_gate(const Turn& turn, Mode mode, const std::string& session,
                  const std::string& prompt_id, bool stop_active);
 
-}  // namespace pan
+}  // namespace stone

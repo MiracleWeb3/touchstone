@@ -1,3 +1,3 @@
 {"type": "user", "message": {"content": "Run the accessibility audit skill on the settings page."}}
-{"type": "assistant", "message": {"id": "m73", "usage": {"output_tokens": 15}, "content": [{"type": "tool_use", "id": "s74", "name": "Skill", "input": {"skill": "pantheon:themis"}}]}}
+{"type": "assistant", "message": {"id": "m73", "usage": {"output_tokens": 15}, "content": [{"type": "tool_use", "id": "s74", "name": "Skill", "input": {"skill": "superpowers:brainstorming"}}]}}
 {"type": "assistant", "message": {"id": "m75", "usage": {"output_tokens": 20}, "content": [{"type": "text", "text": "Ran the audit skill; see its report above."}]}}

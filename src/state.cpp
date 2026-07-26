@@ -8,7 +8,7 @@
 
 #include "json.hpp"
 
-namespace pan {
+namespace stone {
 namespace {
 
 namespace fs = std::filesystem;
@@ -47,7 +47,7 @@ void set_gate_dir(std::string dir) { *override_dir() = std::move(dir); }
 std::string gate_dir() {
     if (!override_dir()->empty()) return *override_dir();
     const char* home = std::getenv("HOME");
-    return std::string(home ? home : ".") + "/.claude/pantheon/gate";
+    return std::string(home ? home : ".") + "/.claude/touchstone/gate";
 }
 
 std::string turn_key_for(const std::string& prompt_id, const std::string& last_user) {
@@ -90,4 +90,4 @@ bool record_block(const std::string& session, const std::string& turn_key, int u
     return true;
 }
 
-}  // namespace pan
+}  // namespace stone

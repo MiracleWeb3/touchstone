@@ -4,7 +4,7 @@
 #include <fstream>
 #include <regex>
 
-namespace pan {
+namespace stone {
 namespace {
 
 // Anchored on purpose: these are machine entries only when they ARE the message, not when a
@@ -134,4 +134,4 @@ std::vector<json::Ptr> turn_entries(const std::string& path) {
     return result;
 }
 
-}  // namespace pan
+}  // namespace stone

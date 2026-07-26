@@ -11,7 +11,7 @@
 
 #include "json.hpp"
 
-namespace pan {
+namespace stone {
 
 // A genuine user prompt: user-typed text, not a tool_result carrier, and not the machine
 // entries Claude Code writes as role "user" (compact summaries, local-command echoes,
@@ -26,4 +26,4 @@ std::string user_text(const json::Value& obj);
 // small, so the common case reads one small tail.
 std::vector<json::Ptr> turn_entries(const std::string& path);
 
-}  // namespace pan
+}  // namespace stone
