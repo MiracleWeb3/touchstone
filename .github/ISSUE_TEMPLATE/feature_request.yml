@@ -1,18 +1,38 @@
 name: Feature request
-description: A discipline, guard, or integration pantheon should have
+description: Something the gate should catch, or catch less often
 labels: [enhancement]
 body:
   - type: textarea
     id: idea
     attributes:
       label: The idea
-      description: What should it do, and what problem does it kill? If it's a comparison ("X does this"), link X.
+      description: >
+        What should it do, and what problem does it kill? pantheon is deliberately one thing —
+        a proposal that adds a second product is likely to be declined, but a proposal that makes
+        the gate sharper is exactly what this is for.
     validations:
       required: true
   - type: dropdown
     id: area
     attributes:
       label: Area
-      options: [router/recall, verification gate, memory/store, HUD/dashboard, CLI/doctor, skills/disciplines, packs/teams, docs, other]
+      options:
+        - What counts as a check (test/build/lint runners)
+        - What counts as a failure
+        - What counts as an introduced stub
+        - The churn threshold / block budget
+        - Config
+        - Docs
+        - Other
+    validations:
+      required: false
+  - type: textarea
+    id: fixture
+    attributes:
+      label: A fixture, if you have one
+      description: >
+        The benchmark is a directory of transcript fixtures — `t*.jsonl` must be caught, `c*.jsonl`
+        must be left alone. A proposal that arrives with one is a proposal that can be verified.
+      render: json
     validations:
       required: false

@@ -5,25 +5,42 @@ on:
     branches: [main]
   pull_request:
 
-env:
-  PYTHONUTF8: "1"
-
 jobs:
-  doctor:
+  gate:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: ["3.9", "3.13"]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: pantheon doctor --selftest
-        run: python scripts/doctor.py --selftest
-      - name: pantheon doctor — runs every module selftest + install checks
-        run: python scripts/doctor.py
-      - name: gate benchmark — 11 planted fake-dones caught, 10 clean turns pass
-        run: python benchmarks/bench_gate.py
+
+      - name: build (warnings are errors)
+        run: c++ -std=c++20 -O2 -Wall -Wextra -Werror -DPANTHEON_SELFTEST -o /tmp/pantheon src/*.cpp
+
+      - name: selftest
+        run: /tmp/pantheon --selftest
+
+      - name: gate benchmark — planted fake-dones caught, clean turns left alone
+        run: /tmp/pantheon --bench bench/fixtures
+
+      - name: fails open on garbage
+        run: |
+          echo 'not json' | /tmp/pantheon
+          echo '{}'       | /tmp/pantheon
+          printf ''       | /tmp/pantheon
+          test -z "$(echo 'not json' | /tmp/pantheon)"
+
+      - name: a missing transcript is silent, not fatal
+        run: |
+          echo '{"transcript_path":"/nope/none.jsonl","session_id":"x"}' | /tmp/pantheon
+          test -z "$(echo '{"transcript_path":"/nope/none.jsonl"}' | /tmp/pantheon)"
+
+      - name: manifests parse
+        run: python3 -c "import json;[json.load(open(p)) for p in ['.claude-plugin/plugin.json','.claude-plugin/marketplace.json','hooks/hooks.json']]"
+
+      - name: every file inside the 300-line rule
+        run: |
+          for f in src/*.cpp src/*.hpp src/*.inc; do
+            n=$(wc -l < "$f"); echo "$f: $n"; test "$n" -le 300
+          done
