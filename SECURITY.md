@@ -1,7 +1,13 @@
 # Security
 
-pantheon runs hooks on every prompt and stop, so it deserves scrutiny — the whole surface is ~4k lines of stdlib Python you can audit in one sitting: [`hooks/`](hooks/), [`lib/`](lib/), [`scripts/`](scripts/).
+pantheon runs on every attempt to end a turn, so it deserves scrutiny. The whole surface is ~1.3k lines of dependency-free C++20 you can audit in one sitting: [`src/`](src/).
 
-**Trust model, in short:** everything stays local (`~/.claude/pantheon/`). The only network call is an opt-out daily version check (2s timeout). Team packs are repo-committed data — imported lessons are weight-clamped, length-capped, and quarantined to the repo that shipped them; pack "standards" are injected as project conventions that never override the user. `pack init` never exports auto-captured text unless you pass `--include-captured`.
+**Trust model, in short:**
 
-**Reporting:** open a [GitHub security advisory](https://github.com/MiracleWeb3/pantheon/security/advisories/new) or a plain issue if it's not sensitive. Include `pantheon doctor` output when relevant. Fixes to injection surfaces, store-poisoning paths, or gate bypasses get priority over everything else.
+- **No network, ever.** There is no update check, no telemetry, no MCP server, no outbound call of any kind.
+- **It never executes anything.** The gate reads the transcript and matches patterns. It does not run your tests, your build, or any command it finds — it only observes what already ran.
+- **It only ever reads two things:** the transcript path handed to it by Claude Code, and its own config. It writes exactly one kind of file: a small block counter under `~/.claude/pantheon/gate/`.
+- **No third-party code.** The JSON reader is 146 lines in this repo. A library you have not read is a runtime you cannot predict, and this one sits on every turn you finish.
+- **Fail-open by construction.** Malformed input, an unreadable transcript, an unwritable state directory, a missing compiler — every uncertain path exits 0 and allows the stop. A gate that wedges a session is worse than no gate.
+
+**Reporting:** open a [GitHub security advisory](https://github.com/MiracleWeb3/pantheon/security/advisories/new) or a plain issue if it's not sensitive. Include the output of `pantheon --scan <transcript>` when relevant. Gate bypasses and any path that could make the hook hang or crash a session get priority over everything else.

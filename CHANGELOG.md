@@ -2,6 +2,21 @@
 
 All notable changes. Versions follow semver; the manifest (`.claude-plugin/plugin.json`) is the source of truth.
 
+## 4.0.0 — 2026-07-26
+
+Rewritten in C++. Everything that was not the verification gate is gone.
+
+- **The gate, ported to C++20.** No Python, no interpreter on the Stop path, no dependencies. It compiles itself once on SessionStart into `~/.cache/pantheon/gate` and rebuilds only when a source file is newer than the binary.
+- **Proven faithful before anything changed.** Both implementations were run over **1,146 real transcript turns** (408 carrying edits or test runs, 74 raising a gate problem) and their decisions compared as parsed JSON: **1146/1146 identical, 0 mismatches**. The replay benchmark is unchanged at 11/11 traps caught, 0/10 false positives.
+- **One bug the differential caught.** Python slices the per-command key by codepoints; the first C++ draft sliced by bytes. An em dash in a commit message diverged the two. Because that string is the key that collapses repeated runs of a command into one verdict, a byte cut could have merged two distinct checks and flipped `verified`.
+- **Removed: 184 bundled skills (46 MB).** 67 were byte-identical to a copy shipped by an already-installed plugin; ~47 more were renames of the same tools. They spent a session's skill-listing budget to provide a worse copy of something already present. `LICENSES/` and `CREDITS.md` go with them — the vendored material they covered is no longer distributed.
+- **Removed: the MCP server.** Its logs held connection handshakes and zero tool calls.
+- **Removed: receipts, adaptive routing, the store, the TUI dashboard, the statusline HUD, budget caps, team packs, forge, export, doctor, the bundled agents, and the `UserPromptSubmit` + `SessionStart` behaviour hooks.** The state directory all of it wrote to had never been created on any machine — a complete record of how often it ran.
+- **Config reduced to one key**, `gate` (`block` / `warn` / `off`), still layered project-over-global. The legacy `preset` values still resolve.
+- **Breaking.** The `pantheon` CLI, its MCP tools, and every bundled skill are gone. Pre-4.0 config files keep their unread keys; nothing is migrated because nothing was ever stored.
+
+4,177 lines of Python became 1,349 lines of C++ plus 343 of tests. The repo went from 46 MB to under 1 MB, and a 43 MB transcript now scans in 0.04s rather than 0.14s.
+
 ## 3.0.3 — 2026-07-20
 
 Load fix: the manifest declared the hooks file Claude Code already loads.

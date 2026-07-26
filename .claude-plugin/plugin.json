@@ -1,18 +1,17 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "pantheon",
-  "version": "3.0.3",
-  "description": "One install, everything: 14 mythic disciplines that auto-route from plain language and LEARN what you accept; BM25-ranked memory that recalls past lessons by itself \u2014 reachable by subagents via 4 bundled stdlib MCP tools; a verification gate that blocks fake 'done' (failing tests / stubs / unverified diffs) and proves itself with a reproducible benchmark in CI (10/10 fake-dones caught, 0 false positives); receipts + TUI dashboard; budget caps (warn/ask/block); team packs (hardened: clamped, project-scoped); 4 model-tiered agents; custom-discipline forging; cross-agent export; a rich statusline HUD with subscription 5h/weekly meters. PLUS 172 merged skills \u2014 188 total, attributed, licenses retained where published (CREDITS.md). Zero dependencies, fail-silent atomic-state hooks, Linux/macOS/Windows CI, full/economy/quiet presets.",
+  "version": "4.0.0",
+  "description": "A verification gate for Claude Code, in C++. On every attempt to end a turn it reads the transcript and refuses \"done\" when the evidence contradicts it: a check that failed, a stub that was introduced (TODO/FIXME/.skip/.only/NotImplementedError), or a substantial code change with no verification behind it at all. Blocks are budgeted so it can never loop, and every failure path is fail-open. Proven by a replay benchmark in CI (11 planted fake-dones caught, 0 false positives on 10 legitimate turns) and ported from the original Python at 1146/1146 identical decisions on real transcripts. No dependencies, no skills, no MCP server, no telemetry.",
   "author": {
     "name": "CyberPunk"
   },
   "homepage": "https://github.com/MiracleWeb3/pantheon",
   "keywords": [
-    "methodology",
-    "workflow",
-    "planning",
-    "debugging",
-    "memory",
-    "productivity"
+    "verification",
+    "quality",
+    "hooks",
+    "cpp",
+    "testing"
   ]
 }

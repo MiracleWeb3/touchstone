@@ -1,9 +1,0 @@
-<svg width="760" height="46" viewBox="0 0 760 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- the pantheon statusline with subscription meters; scale() keeps the full line inside the pill -->
-  <rect x="1" y="1" width="758" height="44" rx="22" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
-  <g transform="translate(24 28) scale(0.72)">
-    <text x="0" y="0" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="13">
-      <tspan fill="#d2a8ff">🏛</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#d2a8ff" font-weight="bold">hydra</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#79c0ff">Fable 5</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#f85149">✳max</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">⧗2h35m</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#3fb950">▓47%</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#3fb950">⏳5h 42%</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#e3b341">📅wk 63%</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#3fb950">+420</tspan><tspan fill="#8b949e">/</tspan><tspan fill="#f85149">-95</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#e6edf3">$6.80</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">⧖1h </tspan><tspan fill="#e6edf3">$2.10</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">wk </tspan><tspan fill="#e6edf3">$18.40</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">⎇ main</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#e3b341">📥3</tspan>
-    </text>
-  </g>
-</svg>

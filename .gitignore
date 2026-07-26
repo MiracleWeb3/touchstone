@@ -1,14 +1,9 @@
-# pantheon is a plugin, not an app — nothing to build. Ignore only local cruft.
-.pantheon/
-learning-inbox.md
-__pycache__/
-*.pyc
+# pantheon builds one binary, and it builds it into the cache dir — never here.
+pantheon
+gate
+*.o
 .DS_Store
 
-# transient / runtime state (never part of the plugin)
+# transient / local state (never part of the plugin)
+.pantheon/
 .omc/
-_preview.html
-last-route.json
-usage-*.json*
-effort.json
-update-check.json

@@ -38,13 +38,13 @@
   <text x="560" y="290" font-family="Georgia, 'Times New Roman', serif" font-size="92"
         letter-spacing="20" fill="url(#wg)">PANTHEON</text>
   <text x="565" y="336" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="24"
-        letter-spacing="7" fill="#8b949e">DISCIPLINES FOR CODING AGENTS</text>
+        letter-spacing="7" fill="#8b949e">VERIFICATION FOR CODING AGENTS</text>
 
   <text x="565" y="400" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="22">
-    <tspan fill="#3fb950">routes itself</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#a78bfa">recalls itself</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#f85149">blocks fake "done"</tspan>
+    <tspan fill="#3fb950">reads the turn</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#a78bfa">sees what ran</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#f85149">blocks fake "done"</tspan>
   </text>
   <text x="565" y="438" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="22">
-    <tspan fill="#e3b341">receipts</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#79c0ff">budgets</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#e6edf3">team packs</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">188 skills</tspan>
+    <tspan fill="#e3b341">11/11 caught</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#79c0ff">0 FP</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#e6edf3">one binary</tspan><tspan fill="#484f58"> · </tspan><tspan fill="#8b949e">no deps</tspan>
   </text>
 
   <rect x="550" y="482" width="660" height="64" rx="14" fill="#161b22" stroke="#30363d" stroke-width="2"/>

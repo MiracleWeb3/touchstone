@@ -1,7 +1,19 @@
 name: Bug report
-description: Something broke — routing, gate, recall, HUD, CLI, store
+description: The gate blocked something it shouldn't, missed something it should have caught, or misbehaved
 labels: [bug]
 body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind
+      options:
+        - False positive — it blocked a turn that was genuinely finished
+        - False negative — it allowed a turn that clearly wasn't
+        - It never fires at all
+        - Build / install problem
+        - Something else
+    validations:
+      required: true
   - type: textarea
     id: what
     attributes:
@@ -10,17 +22,20 @@ body:
     validations:
       required: true
   - type: textarea
-    id: doctor
+    id: scan
     attributes:
-      label: pantheon doctor output
-      description: Run `~/.claude/pantheon/bin/pantheon doctor` (or `python3 <plugin>/scripts/doctor.py`) and paste the output — it checks every moving part.
-      render: text
+      label: What the gate saw
+      description: >
+        Run `pantheon --scan <transcript.jsonl>` on the transcript for that session and paste the
+        output — it prints the edits, the commands, the verdicts and the problems it would raise,
+        which is almost always enough to see why. Redact anything you'd rather not share.
+      render: json
     validations:
-      required: true
+      required: false
   - type: input
     id: env
     attributes:
       label: Environment
-      placeholder: "OS · Python version · Claude Code version"
+      placeholder: "OS · compiler (c++ --version) · Claude Code version"
     validations:
       required: false
